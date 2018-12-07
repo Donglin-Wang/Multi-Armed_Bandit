@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{scrextend}
+
+\title{TreeHouse of Cards}
+\author{Anne Ulrich, Taylor Kemp, Wang Donglin}
+\date{November 2018}
+
+\begin{document}
+
+\maketitle
+
+\section{Executive Summary}
+
+\section{Background}
+
+%what is multi-armed bandit problem?
+
+%Describe the problem that will be studied,a brief history of how the problem came about (with citations), why it is important/interesting,  and any other relevant facts.  You may use images/diagrams/etc from research papers, the internet, or other sources to help with your explanation as long as you cite your references.  Finally, the background section should give the mathematical description of the problem with equations as needed.
+
+%Annie TODO: talk more about how clinical trials are used (make sure to emphasize that we don't actually know the results of the drugs under consideration)
+
+The multi-armed bandit problem originated as a way to understand optimal resource division and scheduling in a dynamic environment where a single agent faces a series of sequential decisions. For example, in clinical trials of cancer drugs, multi-armed bandit approaches can be used to optimally allocate resources when choosing between treatment of patients in the trials and testing of experimental care for the disease investigate. \cite{villar_bowden_wason_2015}
+
+In its simplest formulation, the multi-armed bandit problem considers a set of slot machines, each having an associated cost to play the slot machine and a reward for winning. Underlying each machine is a probability that the machine will pay out. For example, we might have a slot machine that costs a dollar to play and pays out three dollars fifty percent of the time and nothing the rest of the time. When a lever is pulled, a reward is then potentially dispensed; the goal is to balance the trade-off between looking for the lever with the best expected reward, and simply pulling the currently best known expected reward in order to achieve an optimal policy. \cite{kuleshov_precup_2000}
+
+Expectation is a probabilistic measure for the average outcome. For example, suppose a slot machine was pulled a set number of times. The expected reward then refers to the average reward over each pull of the slot machine as the number of times we pull the slot machine gets arbitrarily large. Taking the example from the previous paragraph, suppose that slot machine was pulled an arbitrarily large number of times. As half the time we receive three dollars minus one dollar and the other half of the time we lose a dollar, the expected reward of that slot machine would be two dollars times one half minus one dollar times one half which is one and a half dollars.
+
+%explain further exploration and exploitation
+%if you're curious to learn more, here are some extra algorithms
+When pulling these levers another consideration must be taken into account. If we find a slot machine that is already rewarding us well, do we try to find a better slot machine, or do we stick with the current machine. This forms the basis of \textit{exploration} and \textit{exploitation}. Exploration often refers to pulling a random lever whereas exploitation refers to pulling the best known lever. An algorithm without exploration may result in pulling a lever that rewards the algorithm, but not as much as pulling the optimal lever. This difference is known as regret, and is a measure of how much better the best possible choice performs in expectation compared to what your algorithm chose. In many ways regret can be treated the same as a loss function, and in reinforcement learning the goal is to minimize the regret just how you would minimize the mean squared error. 
+
+One commonly implemented form of the multi-armed bandit problem approach is its contextual subform. The contextual multi-armed bandit problem assumes that in addition to information already known about each slot, we have some "contextual information" that helps us choose a policy for deciding which arm to pull on each term. Contextual information can include demographic information or previous preferences for the choices represented by the slots of the multi-armed bandit.
+
+Concretely, we can visualize this multi-armed bandit problem as it is implemented in clinical trials. Traditionally, when testing the efficacy of a new drug for cancer treatment, scientists create one control group that receives a placebo and one test group that receives the treatment under consideration. The results are compared to each other and medical recommendations may be changed based on the experimental outcome.
+
+Today, physician scientists have access to more different kinds of clinical trial experimental designs than they did a few decades ago. One such design is called \textit{adaptive trial design}. When we choose to test a new cancer treatment protocol with an adaptive experimental approach, we assume a sequential schedule of patients entering the trial. For each patient, we randomly decide whether to enter them into a trial of a new treatment not previously (with probability $\epsilon$) or instead to give them some treatment previously explored in the trial. Deciding to enter the patient into a trial of a new treatment can be considered as analogous to exploration of a new arm on the slot machine; deciding to use a previously considered treatment is analogous to exploitation in the multi-armed bandit problem.
+
+%For example, in a clinical trial, a scientist may face a decision to change treatment for a subset of patients as results become available for other subsets of patients. (This often occurs when a pharmaceutical massively outperforms curative expectations on the test group.) 
+
+%Described mathematically, we can visualize a clinical trial of a new drug as a trade-off between exploration (understanding how new treatments affect patient outcomes) and exploitation (treating current patients enrolled in the trials as effectively and compassionately as possible). In this scenario, each arm represents... \cite{kuleshov_precup_2000}
+
+%introduction: situation with unknown outcomes rather than specific applications
+%one sentence for "this could be used in clinical trials etc"
+
+%Exercise: We are testing a new drug for the treatment of thyroid cancer with metastases in the lungs. The treatment has such and such probability of working correctly
+
+%next: explain how the levers work probabilistically/mathematically
+
+\section{Warm up}
+
+You are opening a new coffee shop in your neighborhood. However, instead of letting the customer order the drinks, you designed a program to order the drink for them. You currently have 10 items on the menu. After trying a type drink, a customer will either be disappointed (represented by 0) or happy (represented by 1) about what they ordered. Given that you know nothing about each customer's preference, your task is to figure out which drink is the most popular and attract the most customer.
+\begin{addmargin}[2em]{2em}
+
+$\newline\newline(i)$
+Can you think of a strategy to improve customer satisfaction over time? 
+
+$\newline (ii)$
+Given a new customer, how can you know which drink will give you the best chance of making the customer happy?
+
+$\newline (iii)$
+Given a drink that have worked well on past customers, will you choose to stick with that drink for every incoming customer or will you take a risk and try to see if customers will enjoy some other drink?
+
+$\newline (iv)$
+What happen if you only get a certain number of tries to determine a strategy to serve drinks? Will that affect you ability satisfy customers?
+
+\end{addmargin}
+
+\section{Main exercise}
+The situation above can be classified as a Multi-armed Bandit Problem. Given several choices with unknown outcomes, how can we come up with a strategy to increase reward of actions overtime? Also, if we have an action that works well, do we keep exploiting this action or do we explore other options hoping that we can find something even better? This trade-off is know as the Exploration vs Exploitation dilemma. There are several classic strategies to improve the outcome in this situation.
+\begin{addmargin}[2em]{2em}
+$\newline Epsilon-Greedy$ \\
+When each customer come in, there is a certain chance that we choose the best drink so far, and there is a certain change that we will randomly select a drink that is not the most-welcomed drink. 
+\end{addmargin}
+\section{First Appendix: Additional Information on Policy Algorithms}
+\section{Second Appendix: Solutions and Code}
+
+%ON Wikipedia, look at several strategies
+%some percentage pure exploration, the rest pure exploitation
+%other strategy: 
+
+\bibliographystyle{unsrt}
+\bibliography{ourbibliography}
+
+\end{document}
